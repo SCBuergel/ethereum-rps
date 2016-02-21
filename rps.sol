@@ -25,19 +25,27 @@ contract rps
     mapping (string => mapping(string => int)) payoffMatrix;
     address player1;
     address player2;
-    string player1Choice;
-    string player2Choice;
+    string public player1Choice;
+    string public player2Choice;
 
     modifier notRegisteredYet()
     {
         if (msg.sender == player1 || msg.sender == player2)
-            throw
+            throw;
+        else
+            _
+    }
+    
+    modifier sentEnoughCash(uint amount)
+    {
+        if (msg.value < amount)
+            throw;
         else
             _
     }
     
     function rps() 
-    {
+    {   // constructor
         payoffMatrix["rock"]["rock"] = 0;
         payoffMatrix["rock"]["paper"] = 2;
         payoffMatrix["rock"]["scissors"] = 1;
@@ -49,9 +57,45 @@ contract rps
         payoffMatrix["scissors"]["scissors"] = 0;
     }
     
-    function play(string choice) constant returns (int winner)
+    function checkBothNotNull() constant returns (bool x)
     {
-        return payoffMatrix[p1][p2];
+        return (bytes(player1Choice).length == 0 && bytes(player2Choice).length == 0);
+    }
+    
+    function getWinner() constant returns (int x)
+    {
+        return payoffMatrix[player1Choice][player2Choice];
+    }
+    
+    function play(string choice) returns (int w)
+    {
+        if (msg.sender == player1)
+            player1Choice = choice;
+        else if (msg.sender == player2)
+            player2Choice = choice;
+        if (bytes(player1Choice).length != 0 && bytes(player2Choice).length != 0)
+        {
+            int winner = payoffMatrix[player1Choice][player2Choice];
+            if (winner == 1)
+                player1.send(this.balance);
+            else if (winner == 2)
+                player2.send(this.balance);
+            else
+            {
+                player1.send(this.balance/2);
+                player2.send(this.balance/2);
+            }
+            // TODO: transfer funds to winner
+             
+            // unregister players and choices
+            player1Choice = "";
+            player2Choice = "";
+            player1 = 0;
+            player2 = 0;
+            return winner;
+        }
+        else 
+            return -1;
     }
     
     function getMyBalance () constant returns (uint amount)
@@ -61,15 +105,7 @@ contract rps
     
     function getContractBalance () constant returns (uint amount)
     {
-        return msg.sender.balance;
-    }
-    
-    modifier sentEnoughCash(uint amount)
-    {
-        if (msg.value < amount)
-            throw;
-        else
-            _
+        return this.balance;
     }
     
     function register()
