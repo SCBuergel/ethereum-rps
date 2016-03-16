@@ -1,24 +1,4 @@
-/*
-simple rock paper scissors game on ethereum
-version 1:
-player 1 and player 2 pay 5 ether to register, if there are already more players registered this fails
-player 1 and 2 both submit a string that is stored and evaluated once the second player has submitted
-
-version 2:
-players submit hashed version of their string
-
-version 3:
-players submit hashed version of their string and a random string
-
-version 4:
-after N blocks the players can request withdrawal of their cash
-
-version 5:
-game operator charges 1% per game
-
-version 6:
-game operator can induce suicide of the contract
-*/
+// simple rock paper scissors game on ethereum in a very naive implementation, just to showcase some basic features of Solidity
 
 contract rps
 {
@@ -57,11 +37,6 @@ contract rps
         payoffMatrix["scissors"]["scissors"] = 0;
     }
     
-    function checkBothNotNull() constant returns (bool x)
-    {
-        return (bytes(player1Choice).length == 0 && bytes(player2Choice).length == 0);
-    }
-    
     function getWinner() constant returns (int x)
     {
         return payoffMatrix[player1Choice][player2Choice];
@@ -83,9 +58,8 @@ contract rps
             else
             {
                 player1.send(this.balance/2);
-                player2.send(this.balance/2);
+                player2.send(this.balance);
             }
-            // TODO: transfer funds to winner
              
             // unregister players and choices
             player1Choice = "";
@@ -98,6 +72,8 @@ contract rps
             return -1;
     }
     
+// HELPER FUNCTIONS (not required for game)
+
     function getMyBalance () constant returns (uint amount)
     {
         return msg.sender.balance;
@@ -127,31 +103,13 @@ contract rps
     {
         return msg.sender == player2;
     }
+
     
-/*
-    address owner;
-    
-    modifier ownerOnly () 
+    function checkBothNotNull() constant returns (bool x)
     {
-        if (msg.sender != owner)
-            throw;
-        else
-            _
+        return (bytes(player1Choice).length == 0 && bytes(player2Choice).length == 0);
     }
-    
-    address[] players;
-    
-    function CheckOwner() constant returns (bool x) 
-    {
-        return msg.sender == owner;
-    }
-    
-    
-    function RegisterPlayer(address newPlayer) 
-        ownerOnly
-    {
-        players.push(newPlayer);
-    }
-*/
+
+// \HELPER FUNCTIONS
 
 }
