@@ -13,4 +13,10 @@ The advanced version is therefore outsourcing the hashing of the choice and the 
 3. go to the folder in which you are creating your minimal node.js app
 4. in that folder install the express webserver: `npm install express`
 5. in that folder install the Ethereum web3 API: `npm install web3`
+6. on the machine which is exposing the geth RPC API (this is might not work on the ether.camp IDE as it requires a running and synced Ethereum node which takes several hours to donwload the blockchain) start geth via `geth --rpc --unlock 0xb21a357712d011149a1c2c452e8f9b021a72b42f console` (replace the account number with some account that has a few ether on it for testing)
+7. via IDE: replace:
+- node URL with sandbox URL (in app.js)
+- contract address (in app.js)
+- contract ABI (in ABI.json)
+
 
