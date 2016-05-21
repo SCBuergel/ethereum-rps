@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <!-- you can also download web3.min.js, this example is optimized for minimal effort -->
+    <script type="text/javascript" src="http://rawgit.com/ethereum/web3.js/master/dist/web3.min.js"></script>
+    <script type="text/javascript" src="ABI.json"></script>
+  </head>
+  
+  <body>
+    <div id="output">connecting to node...</div>
+    enter your address: <input id="address" value="0xdedb49385ad5b94a16f236a6890cf9e0b1e30392" />
+    <br />
+    <button type="button" onclick="register()">Register</button>
+    <br />
+    choose rock paper or scissor: <input id="choice" />
+    <br />
+    put some random text (and remember it!): <input id="secret" />
+    <br />
+    <button type="button" onclick="commit()">Commit</button>
+    <br />
+    <button type="button" onclick="register()">Reveal</button>
+    <br />
+    <br />
+    <button type="button" onclick="test()">Test</button>
+    <br />
+  
+    
+    <script type="text/javascript">
+      var contractAddress = '0x1870cbbbd7c635a8dfa0a2b9b639d2c2fb0b2041';
+      //var nodeUrl = "http://localhost:8545";
+      var nodeUrl = "https://sbuergel.by.ether.camp:8555/sandbox/96532060e3";
+      var web3 = new Web3(new Web3.providers.HttpProvider(nodeUrl));
+      document.getElementById("output").innerText = "block number: " + web3.eth.blockNumber;
+      var contract = web3.eth.contract(contractAbi);
+      var contractInstance = contract.at(contractAddress);
+      var x = contractInstance.getMyBalance();
+      document.getElementById('output').innerText = 'your balance is ' + (web3.fromWei(x.toNumber())) + ' Ether';
+
+      function register() {
+      var address = document.getElementById('address').value;
+      var x = contractInstance.register.sendTransaction({from: address, value: 10});
+      }
+      
+      function commit() {
+      var choice = document.getElementById('choice').value;
+      var secret = document.getElementById('secret').value;
+      var address = document.getElementById('address').value;
+      var hashval = web3.sha3(web3.sha3(choice) ^ web3.sha3(secret));
+      var x = contractInstance.commit.sendTransaction(hashval, {from: address});
+      }
+
+      function reveal() {
+      var choice = document.getElementById('choice').value;
+      var secret = document.getElementById('secret').value;
+      var address = document.getElementById('address').value;
+      var x = contractInstance.reveal.sendTransaction(choice, secret, {from: address});
+      }
+
+      function test() {
+      var v1 = 'rock';
+      var v2 = 'bla'
+      var h1 = web3.sha3(v1);
+      var h2 = web3.sha3(v2);
+      var clientHash = (h1 | h2);
+      var serverHash = contractInstance.testHash(h1, h2);
+      if (clientHash == serverHash)
+      console.log('equal');
+      else
+      console.log('NOT equal: clientHash = ' + clientHash + ', serverHash = ' + serverHash);
+      }
+    </script>
+  </body>
+</html>

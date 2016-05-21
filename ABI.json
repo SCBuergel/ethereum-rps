@@ -1,0 +1,141 @@
+var contractAbi = [
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "player2Choice",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "register",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getMyBalance",
+    "outputs": [
+      {
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "choice",
+        "type": "string"
+      },
+      {
+        "name": "randStr",
+        "type": "string"
+      }
+    ],
+    "name": "reveal",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getContractBalance",
+    "outputs": [
+      {
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "AmIPlayer1",
+    "outputs": [
+      {
+        "name": "x",
+        "type": "bool"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "AmIPlayer2",
+    "outputs": [
+      {
+        "name": "x",
+        "type": "bool"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "checkWinner",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "player1Choice",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "h1",
+        "type": "bytes32"
+      },
+      {
+        "name": "h2",
+        "type": "bytes32"
+      }
+    ],
+    "name": "testHash",
+    "outputs": [
+      {
+        "name": "b",
+        "type": "bytes32"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "hashedCommit",
+        "type": "bytes32"
+      }
+    ],
+    "name": "commit",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "type": "constructor"
+  }
+]

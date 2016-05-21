@@ -8,15 +8,15 @@ The intermediate version splits the game into two phases: in the first phase the
 
 The advanced version is therefore outsourcing the hashing of the choice and the second random string to a frontend (here we do it in Node.JS). That allows the players to securely commit their hashes before revealing their choices. This version requires:
 
-1. node.js `sudo apt-get install nodejs-legacy`
-2. npm `sudo apt-get install npm`
-3. go to the folder in which you are creating your minimal node.js app
-4. in that folder install the express webserver: `npm install express`
-5. in that folder install the Ethereum web3 API: `npm install web3`
-6. on the machine which is exposing the geth RPC API (this is might not work on the ether.camp IDE as it requires a running and synced Ethereum node which takes several hours to donwload the blockchain) start geth via `geth --rpc --unlock 0xb21a357712d011149a1c2c452e8f9b021a72b42f console` (replace the account number with some account that has a few ether on it for testing)
-7. via IDE: replace:
-- node URL with sandbox URL (in app.js)
-- contract address (in app.js)
+(1. node.js `sudo apt-get install nodejs-legacy`)
+(2. npm `sudo apt-get install npm`)
+2. install the webserver: `npm install http-server -g`
+(3. on the machine which is exposing the geth RPC API (this is might not work on the ether.camp IDE as it requires a running and synced Ethereum node which takes several hours to donwload the blockchain) start geth via `geth --rpc --rpccorsdomain '*' --unlock 0xb21a357712d011149a1c2c452e8f9b021a72b42f console` (replace the account number with some account that has a few ether on it for testing and which you are going to user later on))
+4. via IDE: replace:
+- node URL with sandbox URL (in index.html)
+- contract address (in index.html)
 - contract ABI (in ABI.json)
+5. run webserver in direction containing the index.html file: `http-server`
+6. open the URL (change username) `https://sbuergel.by.ether.camp:8080/`
 
 
